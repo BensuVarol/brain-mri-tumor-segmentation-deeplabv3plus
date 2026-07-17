@@ -1,0 +1,27 @@
+# Python and notebook caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local datasets and credentials
+data/*
+!data/README.md
+kaggle.json
+.env
+
+# Large model artifacts
+*.keras
+*.h5
+*.weights.h5
+checkpoints/
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
