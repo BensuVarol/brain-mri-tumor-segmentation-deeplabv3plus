@@ -25,3 +25,10 @@ checkpoints/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Generated run archives, caches, and additional environment files
+*.zip
+runs/
+archives/
+/kaggle_3m/
+.env.*
