@@ -1,0 +1,179 @@
+{
+  "provenance": {
+    "source_filename": "Brain_MRI_Tumor_Segmentation_DeepLabV3Plus_Final (1).ipynb",
+    "source_sha256": "5eeb967cf2e6092de9b4c2823f8efb708308f5339193f08bd00dfaf9cb879fab",
+    "repository_notebook": "notebooks/Brain_MRI_Tumor_Segmentation_DeepLabV3Plus_V2.ipynb",
+    "copy_policy": "User-provided executed notebook preserved byte-for-byte.",
+    "extraction": "Figures and tables read from saved notebook outputs. Training and inference were not rerun for this repository update.",
+    "numeric_precision": "Metrics retain rounded values printed by pandas, including scientific notation. They are not the unavailable original full-precision runtime CSV/JSON files; rounded pixel counts must not be used as exact counts.",
+    "threshold_table": "Complete saved displayed text is included; pandas abbreviated some of the 27 columns. No missing threshold columns were invented."
+  },
+  "configuration": {
+    "seed": 42,
+    "image_size": [
+      256,
+      256
+    ],
+    "batch_size": 8,
+    "architecture": "DeepLabV3+ with ImageNet-pretrained MobileNetV2",
+    "loss": "Binary cross-entropy + per-image soft Dice loss",
+    "warmup_max_epochs": 5,
+    "finetune_max_epochs": 20,
+    "completed_epochs": 14,
+    "completed_warmup_epochs": 5,
+    "completed_finetune_epochs": 9,
+    "selected_checkpoint_stage": "fine-tuning",
+    "selected_checkpoint_epoch_from_early_stopping_log": 7,
+    "selected_threshold": 0.7,
+    "threshold_selected_on": "validation",
+    "tensorflow_version_recorded": "2.21.0"
+  },
+  "split_summary": [
+    {
+      "split": "Train",
+      "patients": 88,
+      "slices": 3165,
+      "positive_slices": 1137,
+      "empty_slices": 2028
+    },
+    {
+      "split": "Validation",
+      "patients": 11,
+      "slices": 386,
+      "positive_slices": 109,
+      "empty_slices": 277
+    },
+    {
+      "split": "Test",
+      "patients": 11,
+      "slices": 378,
+      "positive_slices": 127,
+      "empty_slices": 251
+    }
+  ],
+  "validation_metrics_as_displayed": {
+    "threshold": 0.7,
+    "n_images": 386.0,
+    "n_positive_images": 109.0,
+    "n_empty_images": 277.0,
+    "soft_dice": 0.2134353,
+    "soft_dice_positive": 0.7558336,
+    "soft_dice_empty": 5.89907e-07,
+    "soft_global_dice": 0.7982529,
+    "soft_iou": 0.1815459,
+    "global_dice": 0.8192902,
+    "global_iou": 0.6938964,
+    "mean_dice_all": 0.8407511,
+    "mean_iou_all": 0.8110588,
+    "mean_dice_positive": 0.7571554,
+    "mean_iou_positive": 0.6520063,
+    "mean_dice_empty": 0.8736462,
+    "mean_iou_empty": 0.8736462,
+    "precision": 0.8161735,
+    "recall_sensitivity": 0.8224309,
+    "specificity": 0.9990641,
+    "pixel_accuracy": 0.9981761,
+    "empty_false_positive_images": 35.0,
+    "empty_false_positive_rate": 0.1263538,
+    "tp_pixels": 104591.0,
+    "fp_pixels": 23557.0,
+    "fn_pixels": 22582.0,
+    "tn_pixels": 25146170.0
+  },
+  "test_metrics_as_displayed": {
+    "threshold": 0.7,
+    "n_images": 378.0,
+    "n_positive_images": 127.0,
+    "n_empty_images": 251.0,
+    "soft_dice": 0.2582556,
+    "soft_dice_positive": 0.7686655,
+    "soft_dice_empty": 4.557682e-07,
+    "soft_global_dice": 0.8268665,
+    "soft_iou": 0.2236998,
+    "global_dice": 0.8359426,
+    "global_iou": 0.7181284,
+    "mean_dice_all": 0.7601145,
+    "mean_iou_all": 0.7274677,
+    "mean_dice_positive": 0.7663249,
+    "mean_iou_positive": 0.6691559,
+    "mean_dice_empty": 0.7569721,
+    "mean_iou_empty": 0.7569721,
+    "precision": 0.8682669,
+    "recall_sensitivity": 0.8059388,
+    "specificity": 0.9984929,
+    "pixel_accuracy": 0.9961485,
+    "empty_false_positive_images": 61.0,
+    "empty_false_positive_rate": 0.2430279,
+    "tp_pixels": 243080.0,
+    "fp_pixels": 36880.0,
+    "fn_pixels": 58531.0,
+    "tn_pixels": 24434120.0
+  },
+  "metric_definitions": {
+    "evaluation_unit": "MRI slice; train/validation/test remain patient-disjoint",
+    "probability_precision": "float32 storage; float64 NumPy reductions",
+    "threshold_rule": "foreground if probability > threshold (strict comparison)",
+    "soft_smooth": 1e-06,
+    "soft_dice": "mean over all images of (2*sum(y*p)+smooth)/(sum(y)+sum(p)+smooth)",
+    "soft_global_dice": "same soft formula after summing over every image and pixel",
+    "soft_iou": "mean over all images of (sum(y*p)+smooth)/(sum(y)+sum(p)-sum(y*p)+smooth)",
+    "global_dice": "2*TP/(2*TP+FP+FN), pooled over all images and pixels",
+    "global_iou": "TP/(TP+FP+FN), pooled over all images and pixels",
+    "mean_dice_all": "unweighted mean of thresholded per-image Dice over all images",
+    "mean_dice_positive": "same per-image Dice, restricted to nonempty ground-truth masks",
+    "mean_iou_all": "unweighted mean of thresholded per-image IoU over all images",
+    "positive_subset": "defined from ground truth only: sum(y_true) > 0",
+    "thresholded_empty_policy": "empty ground truth AND empty prediction: Dice=IoU=1; exactly one is empty: Dice=IoU=0; all-empty ground truth/prediction also gives global Dice=IoU=1",
+    "soft_empty_policy": "use the unchanged smooth formula, without thresholding: empty ground truth gives smooth/(sum(probabilities)+smooth); both exactly zero gives 1; small nonzero probabilities are penalized",
+    "undefined_policy": "missing positive/empty subsets and undefined precision/recall/specificity are None (JSON null, empty CSV cell), never an invented zero",
+    "threshold_selection": "validation only; original grid 0.10 to 0.90 step 0.10; maximize global_dice, then minimize empty_false_positive_rate"
+  },
+  "saved_notebook_checks": {
+    "executed_code_cells": 24,
+    "error_outputs": 0,
+    "patient_split_disjoint_check": "passed in saved output",
+    "model_reload_max_absolute_prediction_difference": 0.0,
+    "reload_scope": "One preprocessed validation sample."
+  },
+  "embedded_figures": [
+    {
+      "path": "results/input_example.png",
+      "cell_index": 7,
+      "output_index": 0,
+      "bytes": 578915,
+      "dimensions": [
+        1479,
+        511
+      ],
+      "sha256": "b05e9b3bb60038d4caae4b2f8915daf4955eacf2e9fab9e0a1fe5b7c24e2e97e"
+    },
+    {
+      "path": "results/training_curves.png",
+      "cell_index": 24,
+      "output_index": 0,
+      "bytes": 88667,
+      "dimensions": [
+        1789,
+        490
+      ],
+      "sha256": "e212ded70f2b430bad804843a33fec95607e00c5698c6e1fc2854b70f09a5291"
+    },
+    {
+      "path": "results/prediction_results.png",
+      "cell_index": 34,
+      "output_index": 0,
+      "bytes": 876925,
+      "dimensions": [
+        1566,
+        1589
+      ],
+      "sha256": "7407f1a2652f6bd31c8d65ff3abced19da5de7022850d5fc26660e88d1b22a87"
+    }
+  ],
+  "limitations": [
+    "Single recorded training run and a single patient-disjoint test split; no uncertainty interval or external validation is supplied.",
+    "Metrics are slice-level or pixel-pooled, not patient-wise or 3D volume-level.",
+    "Prediction preview contains four tumor-positive test slices only; empty-slice errors are reported numerically.",
+    "Prior V2 and supplied Final runs used TensorFlow 2.20.0 and 2.21.0 respectively; performance changes cannot be attributed solely to code changes."
+  ]
+}

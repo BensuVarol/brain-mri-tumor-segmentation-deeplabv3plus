@@ -1,0 +1,4 @@
+split,patients,slices,positive_slices,empty_slices
+Train,88,3165,1137,2028
+Validation,11,386,109,277
+Test,11,378,127,251

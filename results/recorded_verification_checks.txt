@@ -1,0 +1,15 @@
+Notebook cell 10 (zero-based):
+Patient split check passed: train, validation, and test patient IDs are disjoint.
+
+
+Notebook cell 16 (zero-based):
+Training Soft Dice/IoU, unequal-batch aggregation, and unchanged loss checks passed.
+
+
+Notebook cell 23 (zero-based):
+Model reload check passed: best_deeplabv3plus_brain_mri.keras
+Maximum absolute prediction difference: 0.0
+
+
+Notebook cell 27 (zero-based):
+Evaluation formula, empty-mask, threshold-boundary, and TensorFlow agreement checks passed.
